@@ -38,7 +38,50 @@ and open the template in the editor.
         
         ?>
         
-        
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>ID</th>
+                <th>Title</th>
+                <th>CreditHours</th>
+                <th>Instructor</th>
+                <th>CRN</th>
+                <th>Days</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>Location</th>
+                <th>Campus</th>
+            </tr>
+            <?php
+                $conn = mysqli_connect("localhost", "root", "", "list of classes");
+                if($conn-> connect_error)
+                {
+                    die("The connection has failed!" . $conn-> connect_error);
+                }
+                $sql = "SELECT * from classlist";
+                $result = $conn-> query($sql);
+                
+                if($result-> num_rows > 0)
+                {
+                    while($row = $result-> fetch_assoc())
+                    {
+                        echo "<tr><td>" . $row["Subject"] . "</td><td>" . 
+                                $row["ID"] . "</td><td>" . $row["Title"] . 
+                                "</td><td>" . $row["CreditHours"] . "</td><td>" . 
+                                $row["Instructor"] . "</td><td>" . $row["CRN"] . 
+                                "</td><td>" . $row["Days"] . "</td><td>" . $row["StartDate"] . 
+                                "</td><td>" . $row["EndDate"] . "</td><td>" . $row["Location"] . 
+                                "</td><td>" . $row["Campus"] . "</td><tr>";
+                    }
+                    echo "</table>";
+                }
+                else
+                {
+                    "there is no result";
+                }
+                $conn-> close();
+            ?>
+        </table>
         
         <?php
         /*
