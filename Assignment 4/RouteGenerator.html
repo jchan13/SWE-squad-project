@@ -180,6 +180,7 @@
                 });
             }
             
+            //Creates the Markers for each direction step
             function showSteps(directionResult, markerArray, stepDisplay, map){
                 var myRoute = directionResult.routes[0].legs[0];
                 
@@ -191,6 +192,7 @@
                 }
             }
             
+            //Creates the InfoWindow on Click on a Marker
             function attachInstructionText(stepDisplay, marker, text, map){
                 google.maps.event.addListener(marker, 'click', function(){
                     stepDisplay.setContent(text);
