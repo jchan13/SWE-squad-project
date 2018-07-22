@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<!--
+ *Final Grade Calculator component for SWE Summer 2018 Project
+ *
+ *@author	Woo Park(scripts) - SWESquad
+ *@link		TBA 
+ *@since	Version 1.0 [June 28 2018]
+ -->
+
+<!-- //////////////////////////////////////////////////////////////////////// -->
+
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Final Grade Calculator</title>
+
+<style>
+
+
+
+/*Table*/
+.table {
+    width: 100%;
+}
+
+.th, rowcontent {
+    vertical-align: top;    
+    background-color: #0230fc;
+    color: white;
+}
+
+
+</style>
+</head>
+<body>
+<!-- Sign Up Pop up window -->
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Sign Up</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+      <label for="psw-repeat"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+
+      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Login Pop up window -->
+<div id="id02" class="modal">
+
+  <form class="modal-content animate" action="/action_page.php">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+<!-- Responsive Header -->
+<div class="header" style="overflow: hidden; background-color: #f1f1f1; padding: 20 px 10px;">
+  <a href="http://swesquad.solutions" class="logo" style="font-size: 25px; font-weight: bold;"><img src="http://swesquad.solutions/Logo.png" height="80"></a>
+  <div class="header-right" style="float: right;">
+    <a class="active" onclick="document.getElementById('id01').style.display='block'" style="float:left; color: white; text-align: center; padding: 12px; text-decoration: none; font-size: 18px; line-height: 25px; border-radius: 4px;" href="#signup">Sign Up</a>
+    <a class="active" onclick="document.getElementById('id02').style.display='block'" style="float:left; color: white; text-align: center; padding: 12px; text-decoration: none; font-size: 18px; line-height: 25px; border-radius: 4px;" href="#login">Login<br /></a>
+  </div>
+</div>
+    <div><font size="5"><b>Final Grade Calculator</b></font></div><br/>
+
+    <form id="gradeMessage"></form><br/>
+    <center><button onclick="findAverage(); finalGrade(); style.display='none'" style="">Calculate Final Grade</button></center><br/><br/>
+
+        <div style="float:left; margin-left: 5.4em">Grade Category</div>
+        <div style="float:left; margin-left: 5.85em">Grade Weight (%)</div>
+        <div style="float:left; margin-left: 2.7em">Total Grades</div><br/>
+        
+
+        <input id="gradeType0" type="text" style="width:20em; text-align: center">
+        <input id="gradeWeight0" type="number" style="width: 11em; text-align: center">
+        <input id="member0" type="number" style="width: 10em; text-align: center"><br />
+            
+        <a href="#" id="filldetails0" onclick="addFields(); style.display='none'" style="float: left; margin-left: 28.7em">Input Grades</a>
+        <div id="container0"/><br/>
+        
+        <script>
+            var rows=0;
+            var container = document.getElementById("container"+rows);
+            var averageArray = new Array;
+            var gradeWeightArray = new Array;
+            
+            function findAverage(){
+                var total=0.0;
+                var count=document.getElementById("member"+rows).value;
+                for(i=0;i<count;i++){
+                    total += parseFloat(document.getElementById("g"+rows+(i+1)).value);
+                }
+                var average= parseFloat(total/count);
+                var roundedAverage = Math.round(average*100)/100;
+                averageArray[rows] = roundedAverage;
+            }
+            
+            function finalGrade(){
+                rows++;
+                var final=0;
+                var message = document.getElementById("gradeMessage");
+                var totalGradeTypes=averageArray.length;
+                for(i=0;i<totalGradeTypes;i++){
+                    var branch = averageArray[i]*(gradeWeightArray[i]/100);
+                    var roundedBranch = Math.round(branch*100)/100;
+                    final = parseFloat(final)+parseFloat(roundedBranch);
+                }
+                message.appendChild(document.createTextNode("Your final grade is "+final+"%"));
+            }
+            
+            function addRows(){
+                rows++;
+                var gradeType = document.createElement("input");
+                gradeType.id = "gradeType"+rows;
+                gradeType.type = "text";
+                gradeType.style = "width: 20em; text-align: center";
+                container.appendChild(gradeType);
+                var gradeWeight = document.createElement("input");
+                gradeWeight.id = "gradeWeight"+rows;
+                gradeWeight.type = "number";
+                gradeWeight.style = "width: 10em; margin-left: 0.3em; text-align: center";
+                container.appendChild(gradeWeight);
+                var member = document.createElement("input");
+                member.id = "member"+rows;
+                member.type = "number";
+                member.style = "width: 10em; text-align: center; margin-left: 0.3em; text-align: center1";
+                container.appendChild(member);
+                var cont = document.createElement("div");
+                cont.id = "container"+rows;
+                container.appendChild(cont);
+                document.getElementById("container"+rows).innerHTML+=
+                        "<a href=\"#\" id=\"filldetails\"+rows onclick=\"addFields(); style.display=\'none\'\" style=\"float: left; margin-left: 28.7em\">Input Grades</a>";
+            }
+            
+            function addFields(){
+                container = document.getElementById("container"+rows);
+                gradeWeightArray[rows]=document.getElementById("gradeWeight"+rows).value;
+                var number = document.getElementById("member"+rows).value;
+                while (container.hasChildNodes()) {
+                    container.removeChild(container.lastChild);
+                }
+                for (i=0;i<number;i++){
+                    var input = document.createElement("input");
+                    input.id = "g"+rows+(i+1);
+                    input.type = "number";
+                    input.style = "width: 5em; float: middle; margin-left: 31.2em";
+                    container.appendChild(input);
+                    container.appendChild(document.createTextNode("%"));
+                    container.appendChild(document.createElement("br"));
+                }
+                document.getElementById("container"+rows).innerHTML+=
+                        "<button onclick=\"findAverage(); addRows(); style.display=\'none\'\" style=\"float: left; margin-left: 19em\">Add Another Row</button><br/>";          
+            }
+        </script>
+
+</body>
+</html>

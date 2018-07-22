@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--
+ *GSU Route Generator component for SWE Summer 2018 Project
+ *
+ *@author	Jodie Chan - SWESquad
+ *@link		TBA 
+ *@since	Version 1.0 [June 28 2018]
+ -->
+
+<!-- //////////////////////////////////////////////////////////////////////// -->
+
+<html>
+    <head>
+        <meta name="viewport" content=""initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <meta charset="UTF-8">
+        <title>GSU Route Generator</title>
+    
+        <!--CSS-->
+        <style>
+            #map {
+                height: 100%;
+            }
+            
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            #floating-panel {
+                position: absolute;
+                top: 10px;
+                left: 30%;
+                z-index: 5;
+                background-color: #fff;
+                passing: 5 px;
+                border: 1px solid #999;
+                text-align: center;
+                line-height: 30px;
+                padding-left: 10px;
+		padding-right: 10px;
+		padding-bottom: 5px;
+            }
+#floating-panel, img {
+
+ padding-top: 5px;
+            }
+            #warnings-panel {
+                width: 100%;
+                height: 10%;
+                text-align: center; 
+            }
+        </style>
+    
+<!-- //////////////////////////////////////////////////////////////////////// --> 
+
+    </head>
+    <body>
+    <!-- Responsive Header --> 
+<div class="header" style="overflow: hidden; background-color: #f1f1f1; padding: 20 px 10px;">
+  <a href="http://swesquad.solutions" class="logo" style="font-size: 25px; font-weight: bold;"><img src="http://swesquad.solutions/Logo.png" height="80"></a>
+  <div class="header-right" style="float: right;">
+    <a class="active" onclick="document.getElementById('id01').style.display='block'" style="float:left; color: white; text-align: center; padding: 12px; text-decoration: none; font-size: 18px; line-height: 25px; border-radius: 4px;" href="#signup">Sign Up</a>
+    <a class="active" onclick="document.getElementById('id02').style.display='block'" style="float:left; color: white; text-align: center; padding: 12px; text-decoration: none; font-size: 18px; line-height: 25px; border-radius: 4px;" href="#login">Login<br /></a>
+  </div>
+</div>
+        <!-- Dropdown location selector overlay -->
+        <div id="floating-panel">
+	            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/Georgia_State_Athletics_logo.svg/1200px-Georgia_State_Athletics_logo.svg.png" height="25" width="25">
+            <b>Start: </b>
+            <select id="start">
+                <option value="Georgia State University, Atlanta, GA, USA">-------- Transportation --------</option>
+                <option value="georgia state station, atlanta, ga">Georgia State Station</option>
+                <option value="peachtree center station, Peachtree Street NE, atlanta, ga">Peachtree Center Station</option>
+                <option value="five points station, alabama street Southwest, atlanta, ga">Five Points Station</option>
+                <option value="M Deck, Piedmont Avenue Southeast, Atlanta, GA, USA">M Deck</option>
+                <option value="G Deck, Atlanta, GA, USA">G Deck</option>
+                <option value="N Deck, Atlanta, GA, USA">N Deck</option>
+                <option value="K Deck, Atlanta, GA, USA">K Deck</option>
+                <option value="">----------- Housing -------------</option>
+                <option value="University Lofts, Edgewood Avenue Southeast, Atlanta, GA, USA">University Lofts</option>
+                <option value="University Commons, Piedmont Avenue Northeast, Atlanta, GA, USA">University Commons</option>
+                <option value="Piedmont North Building, Piedmont Avenue Northeast, Atlanta, GA, USA">Piedmont North</option>
+                <option value="Piedmont Central, Piedmont Avenue Northeast, Atlanta, GA, USA">Piedmont Central</option>
+                <option value="Patton Hall, Edgewood Avenue Northeast, Atlanta, GA, USA">Patton Hall</option>
+                <option value="">---------- Academics ----------</option>
+                <option value="Classroom South, Atlanta, GA, USA">Classroom South</option>
+                <option value="Langdale Hall, Peachtree Center Avenue Southeast, Atlanta, GA, USA">Langdale Hall</option>
+                <option value="Natural Science Center, Decatur Street Southeast, Atlanta, GA, USA">Natural Science Center</option>
+                <option value="Petit Science Center, Piedmont Avenue Southeast, Atlanta, GA, USA">Petit Science Center</option>
+                <option value="Sparks Hall, Gilmer Street Southeast, Atlanta, GA, USA">Sparks Hall</option>
+                <option value="Kell Hall, Peachtree Center Avenue Southeast, Atlanta, GA, USA">Kell Hall</option>
+                <option value="Aderhold Learning Center, Luckie Street Northwest, Atlanta, GA, USA">Aderhold Learning Center</option>
+                <option value="">------ Important Places ------</option>
+                <option value="One Park Place, Decatur Street Southeast, Atlanta, GA, USA">One Park Place</option>
+                <option value="25 Park Place, Atlanta, GA, USA">25 Park Place</option>
+                <option value="Georgia State University Student Clinic, Piedmont Avenue Northeast, Atlanta, GA, USA">GSU Student Clinic</option>
+                <option value="Georgia State University Bookstore, Courtland Street Southeast, Atlanta, GA, USA">University Bookstore</option>
+                <option value="Georgia State University Student Recreation Center, Piedmont Avenue Southeast, Atlanta, GA, USA">Student Recreation Center</option>
+                <option value="Georgia State University Library, Decatur Street Southeast, Atlanta, GA, USA">GSU Library</option>
+            </select>
+            <b>End: </b>
+            <select id="end">
+                                <option value="Georgia State University, Atlanta, GA, USA">-------- Transportation --------</option>
+                <option value="georgia state station, atlanta, ga">Georgia State Station</option>
+                <option value="peachtree center station, Peachtree Street NE, atlanta, ga">Peachtree Center Station</option>
+                <option value="five points station, alabama street Southwest, atlanta, ga">Five Points Station</option>
+                <option value="M Deck, Piedmont Avenue Southeast, Atlanta, GA, USA">M Deck</option>
+                <option value="G Deck, Atlanta, GA, USA">G Deck</option>
+                <option value="N Deck, Atlanta, GA, USA">N Deck</option>
+                <option value="K Deck, Atlanta, GA, USA">K Deck</option>
+                <option value="">----------- Housing -------------</option>
+                <option value="University Lofts, Edgewood Avenue Southeast, Atlanta, GA, USA">University Lofts</option>
+                <option value="University Commons, Piedmont Avenue Northeast, Atlanta, GA, USA">University Commons</option>
+                <option value="Piedmont North Building, Piedmont Avenue Northeast, Atlanta, GA, USA">Piedmont North</option>
+                <option value="Piedmont Central, Piedmont Avenue Northeast, Atlanta, GA, USA">Piedmont Central</option>
+                <option value="Patton Hall, Edgewood Avenue Northeast, Atlanta, GA, USA">Patton Hall</option>
+                <option value="">---------- Academics ----------</option>
+                <option value="Classroom South, Atlanta, GA, USA">Classroom South</option>
+                <option value="Langdale Hall, Peachtree Center Avenue Southeast, Atlanta, GA, USA">Langdale Hall</option>
+                <option value="Natural Science Center, Decatur Street Southeast, Atlanta, GA, USA">Natural Science Center</option>
+                <option value="Petit Science Center, Piedmont Avenue Southeast, Atlanta, GA, USA">Petit Science Center</option>
+                <option value="Sparks Hall, Gilmer Street Southeast, Atlanta, GA, USA">Sparks Hall</option>
+                <option value="Kell Hall, Peachtree Center Avenue Southeast, Atlanta, GA, USA">Kell Hall</option>
+                <option value="Aderhold Learning Center, Luckie Street Northwest, Atlanta, GA, USA">Aderhold Learning Center</option>
+                <option value="">------ Important Places ------</option>
+                <option value="One Park Place, Decatur Street Southeast, Atlanta, GA, USA">One Park Place</option>
+                <option value="25 Park Place, Atlanta, GA, USA">25 Park Place</option>
+                <option value="Georgia State University Student Clinic, Piedmont Avenue Northeast, Atlanta, GA, USA">GSU Student Clinic</option>
+                <option value="Georgia State University Bookstore, Courtland Street Southeast, Atlanta, GA, USA">University Bookstore</option>
+                <option value="Georgia State University Student Recreation Center, Piedmont Avenue Southeast, Atlanta, GA, USA">Student Recreation Center</option>
+                <option value="Georgia State University Library, Decatur Street Southeast, Atlanta, GA, USA">GSU Library</option>
+            </select>
+        </div>
+
+<!-- //////////////////////////////////////////////////////////////////////// --> 
+
+        <div id="map"></div>
+        &nbsp; 
+        <div id="warnings-panel"></div>
+        
+        <!-- Google API Script for map and route generation -->
+        <script>
+            function initMap(){
+                var markerArray = [];
+                
+                //Create a directions service instance
+                var directionsService = new google.maps.DirectionsService;
+                
+                //Create a map with GSU at the center
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 16,
+                    center: {lat: 33.7531, lng: -84.3853}
+                });
+                
+                //Create directions renderer
+                var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+                
+               //Create info window instance
+               var stepDisplay = new google.maps.InfoWindow;
+               
+               //Listens to change when different start and end selections are chosen
+               var onChangeHandler = function() {
+                   calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map);
+               };
+               document.getElementById('start').addEventListener('change', onChangeHandler);
+               document.getElementById('end').addEventListener('change', onChangeHandler);
+            }
+            
+            function calculateAndDisplayRoute(directionsDisplay, directionsService, markerArray, stepDisplay, map){
+                //Removes current markers on the map
+                for(var i = 0; i < markerArray.length; i++){
+                    markerArray[i].setMap(null);
+                }
+                
+                //Gets the start and end locations to generate DirectionsRequest for WALKING directions
+                directionsService.route({
+                    origin: document.getElementById('start').value,
+                    destination: document.getElementById('end').value,
+                    travelMode: 'WALKING'
+                }, function(response, status){
+                    if (status === 'OK'){
+                        document.getElementById('warnings-panel').innerHTML = '<b>' + response.routes[0].warnings + '</b>';
+                        directionsDisplay.setDirections(response);
+                        showSteps(response, markerArray, stepDisplay, map);
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                });
+            }
+            
+            //Creates the Markers for each direction step
+            function showSteps(directionResult, markerArray, stepDisplay, map){
+                var myRoute = directionResult.routes[0].legs[0];
+                
+                for(var i = 0; i < myRoute.steps.length; i++){
+                    var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
+                    marker.setMap(map);
+                    marker.setPosition(myRoute.steps[i].start_location);
+                    attachInstructionText(stepDisplay, marker, myRoute.steps[i].instructions, map);
+                }
+            }
+            
+            //Creates the InfoWindow on Click on a Marker
+            function attachInstructionText(stepDisplay, marker, text, map){
+                google.maps.event.addListener(marker, 'click', function(){
+                    stepDisplay.setContent(text);
+                    stepDisplay.open(map, marker);
+                });
+            }
+        </script>
+
+        <!-- Google API key -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJlC9glZY-oBlQqoHSQqt1QZEHCqwV1L4&callback=initMap"></script>
+    </body>
+</html>
