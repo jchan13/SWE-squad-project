@@ -257,6 +257,7 @@ foreach($results as $subjects) {
 	<th>End Time</th>
 	<th>Location</th>
 	<th>Campus</th>
+	      <th></th>
       </tr>
      </thead>
      <tbody>
